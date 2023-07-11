@@ -6,6 +6,7 @@ import com.lgutierrez.blogrestapi.payload.PostDto;
 import com.lgutierrez.blogrestapi.payload.PostResponse;
 import com.lgutierrez.blogrestapi.repository.PostRepository;
 import com.lgutierrez.blogrestapi.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,9 +20,11 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
+    private ModelMapper modelMapper;
 
-    public PostServiceImpl(PostRepository postRepository){
+    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper){
         this.postRepository = postRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -74,18 +77,10 @@ public class PostServiceImpl implements PostService {
 
     //convert entity to DTO
     private PostDto mapToDTO(Post post){
-
-        return new PostDto(post.getId(),
-                           post.getTitle(),
-                           post.getDescription(),
-                           post.getContent());
+        return modelMapper.map(post, PostDto.class);
     }
 
     private Post mapToEntity(PostDto postDto){
-
-        return new Post(postDto.getId(),
-                        postDto.getTitle(),
-                        postDto.getDescription(),
-                        postDto.getContent());
+        return modelMapper.map(postDto, Post.class);
     }
 }
