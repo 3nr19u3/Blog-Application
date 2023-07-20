@@ -1,5 +1,6 @@
 package com.lgutierrez.blogrestapi.service;
 
+import com.lgutierrez.blogrestapi.entity.Post;
 import com.lgutierrez.blogrestapi.payload.PostDto;
 import com.lgutierrez.blogrestapi.payload.PostResponse;
 
@@ -11,5 +12,6 @@ public interface PostService {
     PostDto getPostById(long id);
     PostDto updatePost(PostDto postDto, long id);
     void deletePostById(long id);
+    List<PostDto> getPostByCategory(long categoryId);
 
 }
